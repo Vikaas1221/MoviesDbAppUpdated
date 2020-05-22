@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MoviesDbApp</string>
+    <string name="movies">Movies</string>
+    <string name="tvshows">tvshows</string>
+    <string name="favourite">Favourite</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="popular">Popular</string>
+</resources>
