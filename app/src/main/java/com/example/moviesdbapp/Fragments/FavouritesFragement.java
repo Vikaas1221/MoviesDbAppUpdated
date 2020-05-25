@@ -16,6 +16,16 @@ import com.example.moviesdbapp.ViewModel.ViewModel;
 
 public class FavouritesFragement extends Fragment
 {
+    private static FavouritesFragement instance;
+
+    public static FavouritesFragement getInstance()
+    {
+        if (instance==null)
+        {
+            instance=new FavouritesFragement();
+        }
+        return instance;
+    }
 
 
     @Nullable

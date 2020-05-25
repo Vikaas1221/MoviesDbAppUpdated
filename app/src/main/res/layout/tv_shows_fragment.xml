@@ -8,21 +8,26 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Movies"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="@dimen/_24sdp"
-            android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                style="@style/seeMore"
+                android:visibility="gone"
+                android:id="@+id/seeMoreNowPlaying"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Airing Today"
+                android:elevation="@dimen/_5sdp"
+                style="@style/textStyle"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/now_playing"
-            android:elevation="@dimen/_5sdp"
-            style="@style/textStyle"
-            android:layout_height="wrap_content"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/nowPlaying"
@@ -36,7 +41,7 @@
             android:layout_height="1dp"></View>
         <TextView
             android:layout_width="wrap_content"
-            android:text="@string/upcoming"
+            android:text="@string/on_tv"
             android:elevation="@dimen/_5sdp"
             style="@style/textStyle"
             android:layout_height="wrap_content"/>

@@ -1,6 +1,8 @@
 package com.example.moviesdbapp.Model;
 
-public class Movie
+import java.io.Serializable;
+
+public class Movie implements Serializable
 {
     private String originalTitle;
     private String movieImage;
@@ -8,6 +10,10 @@ public class Movie
     private String RelaseDate;
     private String overView;
     private String id;
+
+
+
+    private String type;
 
     public Movie(String originalTitle,String movieImage,String userRating,String RelaseDate,String overView,String id)
     {
@@ -67,5 +73,12 @@ public class Movie
 
     public void setId(String id) {
         this.id = id;
+    }
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

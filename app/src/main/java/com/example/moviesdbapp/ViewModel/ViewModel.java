@@ -8,6 +8,8 @@ import androidx.lifecycle.Transformations;
 
 import com.example.moviesdbapp.Model.Movie;
 
+import com.example.moviesdbapp.Model.ReviewsModel;
+import com.example.moviesdbapp.Model.Trailers;
 import com.example.moviesdbapp.Repositry.MovieRepositry;
 
 import java.io.IOException;
@@ -24,13 +26,19 @@ public class ViewModel extends androidx.lifecycle.ViewModel
     LiveData<ArrayList<Movie>> nowPlayinglistLiveData;
     LiveData<ArrayList<Movie>> allAiringlistLiveData;
     LiveData<ArrayList<Movie>> allOnTvlistLiveData;
+    LiveData<ArrayList<Trailers>> TrailermutableLiveData;
+    LiveData<ArrayList<ReviewsModel>> ReviewsmutableLiveData;
     public ViewModel()
     {
-        movieRepo=new MovieRepositry();
+        movieRepo=MovieRepositry.getInstance();
     }
     public void setType(String type)
     {
         movieRepo.getType(type);
+    }
+    public void setId(String id)
+    {
+        movieRepo.getId(id);
     }
     public LiveData<ArrayList<Movie>> getPopularMutableLiveData()
     {
@@ -85,6 +93,22 @@ public class ViewModel extends androidx.lifecycle.ViewModel
             allOnTvlistLiveData=movieRepo.getAllOnTvTodayMovies();
         }
         return allOnTvlistLiveData;
+    }
+    public LiveData<ArrayList<Trailers>> getTrailerData(String id)
+    {
+        if (TrailermutableLiveData==null)
+        {
+            TrailermutableLiveData=movieRepo.getAllTrailers(id);
+        }
+        return TrailermutableLiveData;
+    }
+    public LiveData<ArrayList<ReviewsModel>> getReviewsData(String id)
+    {
+        if (ReviewsmutableLiveData==null)
+        {
+            ReviewsmutableLiveData=movieRepo.getAllReviews(id);
+        }
+        return ReviewsmutableLiveData;
     }
 
 
