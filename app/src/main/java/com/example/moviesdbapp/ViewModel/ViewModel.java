@@ -19,15 +19,23 @@ public class ViewModel extends androidx.lifecycle.ViewModel
 {
     String quer="";
     MovieRepositry movieRepo=null;
-    MutableLiveData<String> queryMutable=new MutableLiveData<>();
+    MutableLiveData<Movie> queryMutable=new MutableLiveData<>();
+    MutableLiveData<String> queryMutable2=new MutableLiveData<>();
     LiveData<ArrayList<Movie>> popularlistLiveData;
     LiveData<ArrayList<Movie>> topRatedlistLiveData;
     LiveData<ArrayList<Movie>> upcominglistLiveData;
     LiveData<ArrayList<Movie>> nowPlayinglistLiveData;
     LiveData<ArrayList<Movie>> allAiringlistLiveData;
     LiveData<ArrayList<Movie>> allOnTvlistLiveData;
+    LiveData<ArrayList<Movie>> allFavouritesLiveData;
     LiveData<ArrayList<Trailers>> TrailermutableLiveData;
     LiveData<ArrayList<ReviewsModel>> ReviewsmutableLiveData;
+    LiveData<String> message;
+    LiveData<String> message2;
+
+
+    private String user;
+    private Movie movie;
     public ViewModel()
     {
         movieRepo=MovieRepositry.getInstance();
@@ -36,10 +44,25 @@ public class ViewModel extends androidx.lifecycle.ViewModel
     {
         movieRepo.getType(type);
     }
+    public void setQuery(Movie movie)
+    {
+        queryMutable.setValue(movie);
+    }
+    public void setQueryMutable2(String movieId)
+    {
+        queryMutable2.setValue(movieId);
+    }
     public void setId(String id)
     {
         movieRepo.getId(id);
     }
+
+    public void setUser(String user) {
+        this.user = user;
+        movieRepo.getUser(user);
+    }
+
+
     public LiveData<ArrayList<Movie>> getPopularMutableLiveData()
     {
         Log.d("uytr","int viewmodel");
@@ -109,6 +132,30 @@ public class ViewModel extends androidx.lifecycle.ViewModel
             ReviewsmutableLiveData=movieRepo.getAllReviews(id);
         }
         return ReviewsmutableLiveData;
+    }
+    public LiveData<String> getMessageOfAdd()
+    {
+        if (message==null)
+        {
+            message=Transformations.switchMap(queryMutable,input->movieRepo.addToFavourite(queryMutable.getValue()));
+        }
+        return message;
+    }
+    public LiveData<ArrayList<Movie>> getAllFavourite()
+    {
+        if (allFavouritesLiveData==null)
+        {
+            allFavouritesLiveData=movieRepo.getAllFavouritesMovies();
+        }
+        return allFavouritesLiveData;
+    }
+    public LiveData<String> getMessageOfRemoved()
+    {
+        if (message2==null)
+        {
+            message2=Transformations.switchMap(queryMutable2,input->movieRepo.removeFromFavourites(queryMutable2.getValue()));
+        }
+        return message2;
     }
 
 

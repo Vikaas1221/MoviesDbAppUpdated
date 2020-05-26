@@ -11,6 +11,14 @@
         <item name="android:layout_marginLeft">@dimen/_5sdp</item>
         <item name="android:textSize">@dimen/_15sdp</item>
     </style>
+    <style name="textStylelogo">
+        <item name="android:layout_marginLeft">@dimen/_5sdp</item>
+        <item name="android:textSize">@dimen/_23sdp</item>
+        <item name="android:textColor">@color/mtplayer</item>
+        <item name="android:text">MTPLAYER</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
     <style name="FrgamentHeadingTextStyle">
 
         <item name="android:fontFamily">sans-serif-condensed-light</item>

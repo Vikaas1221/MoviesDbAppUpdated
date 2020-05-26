@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:id="@+id/user_name"
                     android:layout_below="@+id/now_playing_movie_image"
-                    android:text="vikas jangra"
+                    android:textColor="@android:color/white"
                     style="@style/textStyle"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_2sdp"
@@ -54,11 +54,24 @@
                 android:layout_width="match_parent"
                 android:background="@android:color/darker_gray"
                 android:layout_height="@dimen/_1sdp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:id="@+id/navigationRecyclerview"
                 android:layout_height="wrap_content"/>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/logout"
+                android:id="@+id/logout"
+                android:layout_margin="@dimen/_5sdp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/button_style"
+                android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
 
 
         </LinearLayout>

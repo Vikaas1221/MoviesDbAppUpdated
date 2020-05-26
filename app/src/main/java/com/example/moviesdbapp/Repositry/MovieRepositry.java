@@ -3,6 +3,8 @@ package com.example.moviesdbapp.Repositry;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.Request;
@@ -14,6 +16,19 @@ import com.android.volley.toolbox.Volley;
 import com.example.moviesdbapp.Model.Movie;
 import com.example.moviesdbapp.Model.ReviewsModel;
 import com.example.moviesdbapp.Model.Trailers;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,16 +37,29 @@ import static com.example.moviesdbapp.Activity.MainActivity.context;
 
 import java.sql.DataTruncation;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Nullable;
 
 public class MovieRepositry
 {
+    private FirebaseFirestore firestore=FirebaseFirestore.getInstance();
+    private CollectionReference reference=firestore.collection("Favourite");
     String API_KEY="";
     String type="";
     String id="";
+    private static final String SUCESS="sucess";
+    private static final String ERROR="failed";
     public static  int i=0;
     private static final String MOVIETYPE="movies";
     private static  final String TVTYPE="tv";
     private static MovieRepositry instance;
+    private String user;
+
+
+
+    private Movie movie;
     public static MovieRepositry getInstance()
     {
         if (instance==null)
@@ -40,6 +68,16 @@ public class MovieRepositry
         }
         return instance;
     }
+    public void getUser(String user)
+    {
+        this.user=user;
+    }
+
+//    public void getMovie(Movie movie)
+//    {
+//        this.movie=movie;
+//    }
+
     public void getType(String type)
     {
         this.type=type;
@@ -724,6 +762,107 @@ public class MovieRepositry
 
     }
 
+    public MutableLiveData<String> addToFavourite(Movie movie )
+    {
+        Log.d("calledAddtofavo","called");
+        String message1;
+        MutableLiveData<String> message=new MutableLiveData<>();
+        Map<String,String> moviemap=new HashMap<>();
+        moviemap.put("MovieName",movie.getOriginalTitle());
+        moviemap.put("MovieImage",movie.getMovieImage());
+        moviemap.put("MovieRating",movie.getUserRating());
+        moviemap.put("Type",movie.getType());
+        moviemap.put("MovieOverview",movie.getOverView());
+        moviemap.put("MovieDate",movie.getRelaseDate());
+        moviemap.put("MovieId",movie.getId());
+        moviemap.put("userid",user);
+        reference.add(moviemap)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task)
+                    {
+                        if (task.isSuccessful())
+                        {
+                            message.setValue(SUCESS);
+                        }
+                        else
+                        {
+                            message.setValue(ERROR);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener()
+                {
+                    @Override
+                    public void onFailure(@NonNull Exception e)
+                    {
+                        message.setValue(ERROR);
+                    }
+                });
+
+        return message;
+    }
+    public MutableLiveData<ArrayList<Movie>> getAllFavouritesMovies()
+    {
+        MutableLiveData<ArrayList<Movie>> mutableLiveData=new MutableLiveData<>();
+        ArrayList<Movie> movies=new ArrayList<>();
+        reference.whereEqualTo("userid",user)
+                .addSnapshotListener(new EventListener<QuerySnapshot>()
+                {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e)
+                    {
+                        if (!queryDocumentSnapshots.isEmpty())
+                        {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot:queryDocumentSnapshots)
+                            {
+                                String movieName=queryDocumentSnapshot.getString("MovieName");
+                                String movieOverview=queryDocumentSnapshot.getString("MovieOverview");
+                                String movieRating=queryDocumentSnapshot.getString("MovieRating");
+                                String movieRelease=queryDocumentSnapshot.getString("MovieDate");
+                                String movieId=queryDocumentSnapshot.getString("MovieId");
+                                String movieImage=queryDocumentSnapshot.getString("MovieImage");
+                                String type=queryDocumentSnapshot.getString("Type");
+                                Movie movie=new Movie(movieName,movieImage,movieRating,movieRelease,movieOverview,movieId);
+                                movie.setType(type);
+                                movies.add(movie);
+                            }
+                            mutableLiveData.setValue(movies);
+                        }
+                    }
+                });
+
+        return mutableLiveData;
+
+    }
+    public MutableLiveData<String> removeFromFavourites(String movieId)
+    {
+        MutableLiveData<String> deleteMessage=new MutableLiveData<>();
+        reference.whereEqualTo("MovieId",movieId)
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
+        {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots)
+            {
+                for (QueryDocumentSnapshot queryDocumentSnapshot:queryDocumentSnapshots)
+                {
+                    String id=queryDocumentSnapshot.getId();
+                    DocumentReference documentReference=reference.document(id);
+                    documentReference.delete()
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid)
+                                {
+                                    deleteMessage.setValue(SUCESS);
+                                }
+                            });
+                }
+            }
+        });
+
+        return deleteMessage;
+    }
 
 
 
