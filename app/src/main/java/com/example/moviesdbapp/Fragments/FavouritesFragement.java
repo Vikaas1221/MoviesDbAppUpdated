@@ -74,6 +74,7 @@ public class FavouritesFragement extends Fragment
         viewModel.setUser(user);
         viewModel.getAllFavourite().observe(this, new Observer<ArrayList<Movie>>()
         {
+
             @Override
             public void onChanged(ArrayList<Movie> arrayList)
             {
