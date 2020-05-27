@@ -32,9 +32,9 @@ public class FavouritesFragement extends Fragment
     FirebaseAuth mauth;
     FirebaseUser currentuser;
     String user;
-    private RecyclerView SeeMoreRecycerView;
+     RecyclerView SeeMoreRecycerView;
     public ArrayList<Movie> movieArrayList;
-    private seeMoreScreenAdapter adapter;
+    seeMoreScreenAdapter adapter;
     ViewModel viewModel;
     Context mcontext;
     mainactivityInterface minterface;

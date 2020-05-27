@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ import com.google.android.youtube.player.YouTubePlayerSupportFragmentX;
 import java.util.ArrayList;
 public class exoPlayerFragment extends Fragment
 {
+    TextView movieName;
     RecyclerView trailerrecyler;
     RecyclerView.Adapter adapter;
     ArrayList<Trailers> arrayList;
@@ -35,6 +37,8 @@ public class exoPlayerFragment extends Fragment
     String id;
     public static String image;
 
+
+    public String movieNAme;
 
     public String type;
     ArrayList<Trailers> TrailersArrayList;
@@ -49,6 +53,8 @@ public class exoPlayerFragment extends Fragment
     {
         View view=inflater.inflate(R.layout.exoplayer_layout,container,false);
         trailerrecyler=view.findViewById(R.id.trailersRecycler);
+//        movieName=view.findViewById(R.id.moviename);
+//        movieName.setText(getMovieNAme());
         return view;
     }
 
@@ -73,13 +79,16 @@ public class exoPlayerFragment extends Fragment
             @Override
             public void onChanged(ArrayList<Trailers> trailers)
             {
-                TrailersArrayList.clear();
-                Log.d("Arraylistsize",""+TrailersArrayList.size());
-                getTrailerKey(trailers.get(0).getTrailerKey());
-                adapter=new trailersAdapter(trailers,getContext());
-                trailerrecyler.setAdapter(adapter);
-                TrailersArrayList.addAll(trailers);
-                adapter.notifyDataSetChanged();
+                if (trailers.size()>0)
+                {
+                    TrailersArrayList.clear();
+                    Log.d("Arraylistsize", "" + TrailersArrayList.size());
+                    getTrailerKey(trailers.get(0).getTrailerKey());
+                    adapter = new trailersAdapter(trailers, getContext());
+                    trailerrecyler.setAdapter(adapter);
+                    TrailersArrayList.addAll(trailers);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
     }
@@ -107,30 +116,31 @@ public class exoPlayerFragment extends Fragment
     }
     public void getTrailerKey(String key)
     {
-        YouTubePlayerSupportFragmentX youTubePlayerFragment = YouTubePlayerSupportFragmentX.newInstance();
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.youtube_layout,youTubePlayerFragment).commit();
-        youTubePlayerFragment.initialize(API_KEY, new YouTubePlayer.OnInitializedListener()
+        if (key!=null||key.equals(""))
         {
-            @Override
-            public void onInitializationSuccess(Provider provider, YouTubePlayer youTubePlayer, boolean b)
-            {
-                if (!b)
-                {
-                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
-                    youTubePlayer.loadVideo(key);
-                    youTubePlayer.play();
+            YouTubePlayerSupportFragmentX youTubePlayerFragment = YouTubePlayerSupportFragmentX.newInstance();
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+            transaction.replace(R.id.youtube_layout, youTubePlayerFragment).commit();
+            youTubePlayerFragment.initialize(API_KEY, new YouTubePlayer.OnInitializedListener() {
+                @Override
+                public void onInitializationSuccess(Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                    if (!b) {
+                        youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                        youTubePlayer.loadVideo(key);
+                        youTubePlayer.play();
+                    }
+
                 }
 
-            }
-            @Override
-            public void onInitializationFailure(Provider provider, YouTubeInitializationResult youTubeInitializationResult)
-            {
-                String errorMessage = youTubeInitializationResult.toString();
-                Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
-                Log.d("errorMessage:", errorMessage);
-            }
-        });
+                @Override
+                public void onInitializationFailure(Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                    String errorMessage = youTubeInitializationResult.toString();
+                    Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+                    Log.d("errorMessage:", errorMessage);
+                }
+            });
+        }
+
 
     }
 
@@ -155,6 +165,16 @@ public class exoPlayerFragment extends Fragment
     public void setType(String type) {
         this.type = type;
     }
+    public String getMovieNAme()
+    {
+        return movieNAme;
+    }
+
+    public void setMovieNAme(String movieNAme)
+    {
+        this.movieNAme = movieNAme;
+    }
+
 
 
 

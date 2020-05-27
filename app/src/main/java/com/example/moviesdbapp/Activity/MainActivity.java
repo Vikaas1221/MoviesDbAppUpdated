@@ -166,19 +166,11 @@ public class MainActivity extends AppCompatActivity implements mainactivityInter
                     intent.putExtra("id",id);
                     intent.putExtra("image",movie_image);
                     intent.putExtra("type",movie.getType());
+                 //   intent.putExtra("moviename",movie.getOriginalTitle());
                     startActivity(intent);
                 }
             }
         });
-//        favourite.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                Movie movie=movies.get(position);
-//
-//            }
-//        });
     }
 
     public void showBottomsheet(ArrayList<Movie> movies,int position)
@@ -205,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements mainactivityInter
             public void onClick(View v)
             {
                 removeFromFavourites(movie.getId());
+                movies.remove(movie);
                 bottomSheetDialog.dismiss();
             }
         });

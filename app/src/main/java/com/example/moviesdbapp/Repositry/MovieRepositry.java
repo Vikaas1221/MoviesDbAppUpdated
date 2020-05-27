@@ -863,6 +863,26 @@ public class MovieRepositry
 
         return deleteMessage;
     }
+    public MutableLiveData<Boolean> searchMovieInDatabase(String movieId)
+    {
+        MutableLiveData<Boolean> isFav=new MutableLiveData<>();
+        reference.whereEqualTo("MovieId",movieId)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e)
+                    {
+                        if (!queryDocumentSnapshots.isEmpty())
+                        {
+                            isFav.setValue(true);
+                        }
+                        else
+                        {
+                            isFav.setValue(false);
+                        }
+                    }
+                });
+        return isFav;
+    }
 
 
 

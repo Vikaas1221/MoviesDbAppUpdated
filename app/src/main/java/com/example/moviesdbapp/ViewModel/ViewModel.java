@@ -21,6 +21,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel
     MovieRepositry movieRepo=null;
     MutableLiveData<Movie> queryMutable=new MutableLiveData<>();
     MutableLiveData<String> queryMutable2=new MutableLiveData<>();
+    MutableLiveData<String> checkFroFav=new MutableLiveData<>();
     LiveData<ArrayList<Movie>> popularlistLiveData;
     LiveData<ArrayList<Movie>> topRatedlistLiveData;
     LiveData<ArrayList<Movie>> upcominglistLiveData;
@@ -32,6 +33,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel
     LiveData<ArrayList<ReviewsModel>> ReviewsmutableLiveData;
     LiveData<String> message;
     LiveData<String> message2;
+    LiveData<Boolean> isFavMovie;
 
 
     private String user;
@@ -157,6 +159,16 @@ public class ViewModel extends androidx.lifecycle.ViewModel
         }
         return message2;
     }
+
+    public LiveData<Boolean> isFav()
+    {
+        if (isFavMovie==null)
+        {
+            isFavMovie=Transformations.switchMap(queryMutable2,input->movieRepo.searchMovieInDatabase(queryMutable2.getValue()));
+        }
+        return isFavMovie;
+    }
+
 
 
 }
