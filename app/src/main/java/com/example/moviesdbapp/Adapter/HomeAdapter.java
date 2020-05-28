@@ -65,7 +65,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>
             public void onClick(View v)
             {
 //                idInterface.item_id(movie.getId(),"movie",movie.getMovieImage());
-                anInterface.item_id(movie.getId(),movie.getType(),movie.getMovieImage());
+                anInterface.item_id(movie.getId(),movie.getType(),movie.getMovieImage(),movie.getOriginalTitle());
             }
         });
 

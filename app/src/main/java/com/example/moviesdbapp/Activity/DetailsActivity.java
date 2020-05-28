@@ -19,13 +19,13 @@ public class DetailsActivity extends AppCompatActivity
         setContentView(R.layout.activity_details);
         String id=getIntent().getExtras().getString("id");
         String img=getIntent().getExtras().getString("image");
-      //  String name=getIntent().getExtras().getString("moviename");
+        String name=getIntent().getExtras().getString("moviename");
         type=getIntent().getExtras().getString("type");
         exoPlayerFragment fragment=new exoPlayerFragment();
         fragment.setId(id);
         fragment.setImage(img);
         fragment.setType(type);
-      //  fragment.setMovieNAme(name);
+        fragment.setMovieNAme(name);
         getSupportFragmentManager().beginTransaction().replace(R.id.detailsContainer,fragment).addToBackStack(null).commit();
 
 

@@ -12,7 +12,6 @@ import com.example.moviesdbapp.Model.ReviewsModel;
 import com.example.moviesdbapp.Model.Trailers;
 import com.example.moviesdbapp.Repositry.MovieRepositry;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ViewModel extends androidx.lifecycle.ViewModel
@@ -31,6 +30,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel
     LiveData<ArrayList<Movie>> allFavouritesLiveData;
     LiveData<ArrayList<Trailers>> TrailermutableLiveData;
     LiveData<ArrayList<ReviewsModel>> ReviewsmutableLiveData;
+    MutableLiveData<ArrayList<Movie>> ReviewsmutableLiveData1;
     LiveData<String> message;
     LiveData<String> message2;
     LiveData<Boolean> isFavMovie;
@@ -168,7 +168,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel
         }
         return isFavMovie;
     }
-
 
 
 }

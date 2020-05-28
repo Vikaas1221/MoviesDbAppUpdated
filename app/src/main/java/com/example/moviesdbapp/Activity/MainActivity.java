@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements mainactivityInter
     FirebaseFirestore firestore=FirebaseFirestore.getInstance();
     CollectionReference reference=firestore.collection("Favourite");
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -112,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements mainactivityInter
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         arrayList=new ArrayList<>();
-        String[] naev_ar={"Movies","TvShows","Favourites","Settings","Share"};
-        int[] nav_item_images={R.drawable.ic_action_video_library,R.drawable.ic_laptop_chromebook_black_24dp,R.drawable.ic_collections_bookmark_black_24dp,R.drawable.ic_settings_black_24dp,R.drawable.ic_share_black_24dp};
+        String[] naev_ar={"Movies","TvShows","Favourites","Share"};
+        int[] nav_item_images={R.drawable.ic_action_video_library,R.drawable.ic_laptop_chromebook_black_24dp,R.drawable.ic_collections_bookmark_black_24dp,R.drawable.ic_share_black_24dp};
         for (int i=0;i<naev_ar.length;i++)
         {
             NavModel model=new NavModel(naev_ar[i],nav_item_images[i]);
@@ -125,12 +128,13 @@ public class MainActivity extends AppCompatActivity implements mainactivityInter
     }
 
     @Override
-    public void item_id(String id, String type, String image)
+    public void item_id(String id, String type, String image,String moviename)
     {
         Intent intent=new Intent(MainActivity.this,DetailsActivity.class);
         intent.putExtra("id",id);
         intent.putExtra("image",image);
         intent.putExtra("type",type);
+        intent.putExtra("moviename",moviename);
         startActivity(intent);
     }
 
@@ -139,10 +143,9 @@ public class MainActivity extends AppCompatActivity implements mainactivityInter
     {
         Intent intent=new Intent(MainActivity.this,seeMoreActivity.class);
         Bundle bundle=new Bundle();
-        bundle.putSerializable("movies",(Serializable)movies);
+        bundle.putSerializable("movies", movies);
         intent.putExtra("TAG",tag);
         intent.putExtra("type",type);
-
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -166,18 +169,19 @@ public class MainActivity extends AppCompatActivity implements mainactivityInter
                     intent.putExtra("id",id);
                     intent.putExtra("image",movie_image);
                     intent.putExtra("type",movie.getType());
-                 //   intent.putExtra("moviename",movie.getOriginalTitle());
+                    intent.putExtra("moviename",movie.getOriginalTitle());
                     startActivity(intent);
                 }
             }
         });
     }
 
-    public void showBottomsheet(ArrayList<Movie> movies,int position)
+    @SuppressLint("SetTextI18n")
+    public void showBottomsheet(ArrayList<Movie> movies, int position)
     {
         BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(MainActivity.this,R.style.BottomSheetDialogTheme);
         View bottomShetView= LayoutInflater.from(getApplicationContext())
-                .inflate(R.layout.bottom_sheet_layout,(LinearLayout)findViewById(R.id.bottomSheetContainer));
+                .inflate(R.layout.bottom_sheet_layout, findViewById(R.id.bottomSheetContainer));
         ImageView movieImag=bottomShetView.findViewById(R.id.movieImage);
 
         TextView MovieName=bottomShetView.findViewById(R.id.MovieName);

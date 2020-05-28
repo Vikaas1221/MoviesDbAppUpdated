@@ -8,6 +8,7 @@
     <ImageView
         android:layout_width="@dimen/_90sdp"
         android:src="@drawable/ic_mt_player"
+        android:contentDescription="@string/image"
         android:layout_gravity="center_horizontal"
         android:layout_height="@dimen/_90sdp"/>
     <LinearLayout

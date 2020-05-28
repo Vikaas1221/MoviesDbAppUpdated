@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,6 +54,7 @@ public class seeMoreActivity extends AppCompatActivity implements RecyclerViewCl
     String user;
     ViewModel viewModel;
     Boolean isFav=false;
+    BottomSheetDialog bottomSheetDialog;
 
 
 
@@ -79,7 +81,6 @@ public class seeMoreActivity extends AppCompatActivity implements RecyclerViewCl
             e.printStackTrace();
         }
         toolbar.setTitle(tag);
-        toolbar.setLogo(R.drawable.ic_arrow_back_black_24dp);
         SeeMoreRecycerView=findViewById(R.id.allMoviesRecyclerView);
         SeeMoreRecycerView.setLayoutManager(new GridLayoutManager(this,3));
         SeeMoreRecycerView.setHasFixedSize(true);
@@ -106,8 +107,9 @@ public class seeMoreActivity extends AppCompatActivity implements RecyclerViewCl
                     intent.putExtra("id",id);
                     intent.putExtra("image",movie_image);
                     intent.putExtra("type",TYPE);
-              //      intent.putExtra("moviename",movie.getOriginalTitle());
+                    intent.putExtra("moviename",movie.getOriginalTitle());
                     startActivity(intent);
+                   // bottomSheetDialog.dismiss();
                 }
             }
         });
@@ -115,11 +117,12 @@ public class seeMoreActivity extends AppCompatActivity implements RecyclerViewCl
 
         Toast.makeText(seeMoreActivity.this,"clciked"+position,Toast.LENGTH_SHORT).show();
     }
+    @SuppressLint("SetTextI18n")
     public void showBottomsheet(int position)
     {
-        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(seeMoreActivity.this,R.style.BottomSheetDialogTheme);
+         bottomSheetDialog=new BottomSheetDialog(seeMoreActivity.this,R.style.BottomSheetDialogTheme);
         View bottomShetView= LayoutInflater.from(getApplicationContext())
-                .inflate(R.layout.bottom_sheet_layout,(LinearLayout)findViewById(R.id.bottomSheetContainer));
+                .inflate(R.layout.bottom_sheet_layout, findViewById(R.id.bottomSheetContainer));
         ImageView movieImag=bottomShetView.findViewById(R.id.movieImage);
         TextView MovieName=bottomShetView.findViewById(R.id.MovieName);
         TextView MovieYear=bottomShetView.findViewById(R.id.ReleaseDate);

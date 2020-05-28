@@ -29,4 +29,10 @@
     <string name="logout">Logout</string>
     <string name="trailer">Trailer</string>
     <string name="dark_theme">Dark Theme</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="image">Image data</string>
+    <string name="reviews">Reviews</string>
+    <string name="or">OR</string>
+    <string name="name">Name</string>
 </resources>

@@ -38,6 +38,12 @@ public class seeMoreScreenAdapter extends RecyclerView.Adapter<seeMoreScreenAdap
         this.movieArrayList=movieArrayList;
         this.minterface=minterface;
     }
+    public seeMoreScreenAdapter(Context context,ArrayList<Movie> movieArrayList)
+    {
+        this.movieArrayList=movieArrayList;
+        this.context=context;
+    }
+
 
 
     @NonNull

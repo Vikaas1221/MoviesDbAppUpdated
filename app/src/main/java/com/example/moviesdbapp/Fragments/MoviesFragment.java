@@ -92,19 +92,6 @@ public class MoviesFragment extends Fragment
 
     }
 
-//    @Override
-//    public void onAttach(@NonNull Context context)
-//    {
-//        super.onAttach(context);
-//        try {
-//          //  comm=(communicator) context;
-//            anInterface=(mainactivityInterface)context;
-//        }catch (ClassCastException e)
-//        {
-//            throw new ClassCastException(context.toString()
-//                    + " must implement communicator");
-//        }
-//    }
 
     public void fetchPopularDataFromViewModel(RecyclerView popularRecycerView)
     {

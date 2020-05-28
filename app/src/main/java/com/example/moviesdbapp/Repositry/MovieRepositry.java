@@ -1,10 +1,11 @@
 package com.example.moviesdbapp.Repositry;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.Request;
@@ -16,12 +17,11 @@ import com.android.volley.toolbox.Volley;
 import com.example.moviesdbapp.Model.Movie;
 import com.example.moviesdbapp.Model.ReviewsModel;
 import com.example.moviesdbapp.Model.Trailers;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -35,7 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import static com.example.moviesdbapp.Activity.MainActivity.context;
 
-import java.sql.DataTruncation;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +56,7 @@ public class MovieRepositry
     private static  final String TVTYPE="tv";
     private static MovieRepositry instance;
     private String user;
+    private static  String YOURAPIKEY="1f59ebe04c42625fc6c290dccb75e0d5";
 
 
 
@@ -88,7 +89,7 @@ public class MovieRepositry
     }
     public MutableLiveData<ArrayList<Movie>> getAllPopularMovies()
     {
-        API_KEY="https://api.themoviedb.org/3/"+type+"/popular?api_key=1f59ebe04c42625fc6c290dccb75e0d5&language=en-US&page=1";
+        API_KEY="https://api.themoviedb.org/3/"+type+"/popular?api_key="+YOURAPIKEY+"&language=en-US&page=1";
         Log.d("qwert","In repo"+i++);
         final MutableLiveData<ArrayList<Movie>> data = new MutableLiveData<>();
         final ArrayList<Movie> arrayList=new ArrayList<>();
@@ -96,8 +97,8 @@ public class MovieRepositry
         {
             @Override
             public void onResponse(JSONObject response)
-            { ;
-            Log.d("callingjsonapi","calling json api");
+            {
+                Log.d("callingjsonapi","calling json api");
                 JSONArray jsonArray= null;
                 try {
                     jsonArray = response.getJSONArray("results");
@@ -187,7 +188,7 @@ public class MovieRepositry
     public MutableLiveData<ArrayList<Movie>> getAllTopRatedMovies()
     {
 
-        API_KEY="https://api.themoviedb.org/3/"+type+"/top_rated?api_key=1f59ebe04c42625fc6c290dccb75e0d5&language=en-US&page=1";
+        API_KEY="https://api.themoviedb.org/3/"+type+"/top_rated?api_key="+YOURAPIKEY+"&language=en-US&page=1";
         Log.d("qwert","In repo");
         final MutableLiveData<ArrayList<Movie>> data = new MutableLiveData<>();
         final ArrayList<Movie> arrayList=new ArrayList<>();
@@ -283,7 +284,7 @@ public class MovieRepositry
     public MutableLiveData<ArrayList<Movie>> getAllUpcomingMovies()
     {
 
-        API_KEY="https://api.themoviedb.org/3/"+type+"/upcoming?api_key=1f59ebe04c42625fc6c290dccb75e0d5&language=en-US&page=1";
+        API_KEY="https://api.themoviedb.org/3/"+type+"/upcoming?api_key="+YOURAPIKEY+"&language=en-US&page=1";
         Log.d("qwert","In repo");
         final MutableLiveData<ArrayList<Movie>> data = new MutableLiveData<>();
         final ArrayList<Movie> arrayList=new ArrayList<>();
@@ -379,7 +380,7 @@ public class MovieRepositry
     public MutableLiveData<ArrayList<Movie>> getAllNowPlayingMovies()
     {
 
-        API_KEY="https://api.themoviedb.org/3/"+type+"/now_playing?api_key=1f59ebe04c42625fc6c290dccb75e0d5&language=en-US&page=1";
+        API_KEY="https://api.themoviedb.org/3/"+type+"/now_playing?api_key="+YOURAPIKEY+"&language=en-US&page=1";
         Log.d("qwert","In repo");
         final MutableLiveData<ArrayList<Movie>> data = new MutableLiveData<>();
         final ArrayList<Movie> arrayList=new ArrayList<>();
@@ -475,7 +476,7 @@ public class MovieRepositry
     public MutableLiveData<ArrayList<Movie>> getAllairingTodayMovies()
     {
 
-        API_KEY="https://api.themoviedb.org/3/"+type+"/airing_today?api_key=1f59ebe04c42625fc6c290dccb75e0d5&language=en-US&page=1";
+        API_KEY="https://api.themoviedb.org/3/"+type+"/airing_today?api_key="+YOURAPIKEY+"&language=en-US&page=1";
         Log.d("qwert","In repo");
         final MutableLiveData<ArrayList<Movie>> data = new MutableLiveData<>();
         final ArrayList<Movie> arrayList=new ArrayList<>();
@@ -566,7 +567,7 @@ public class MovieRepositry
     public MutableLiveData<ArrayList<Movie>> getAllOnTvTodayMovies()
     {
 
-        API_KEY="https://api.themoviedb.org/3/"+type+"/on_the_air?api_key=1f59ebe04c42625fc6c290dccb75e0d5&language=en-US&page=1";
+        API_KEY="https://api.themoviedb.org/3/"+type+"/on_the_air?api_key="+YOURAPIKEY+"&language=en-US&page=1";
         Log.d("qwert","In repo");
         final MutableLiveData<ArrayList<Movie>> data = new MutableLiveData<>();
         final ArrayList<Movie> arrayList=new ArrayList<>();
@@ -657,7 +658,7 @@ public class MovieRepositry
 
     public MutableLiveData<ArrayList<Trailers>> getAllTrailers(String id)
     {
-        final String TrailersAPIKEY="https://api.themoviedb.org/3/"+type+"/"+id+"/videos?api_key=1f59ebe04c42625fc6c290dccb75e0d5&language=en-US";
+        final String TrailersAPIKEY="https://api.themoviedb.org/3/"+type+"/"+id+"/videos?api_key="+YOURAPIKEY+"&language=en-US";
         final MutableLiveData<ArrayList<Trailers>> data = new MutableLiveData<>();
         final ArrayList<Trailers> arrayList=new ArrayList<>();
         JsonObjectRequest objectRequest=new JsonObjectRequest(Request.Method.GET, TrailersAPIKEY, null, new Response.Listener<JSONObject>()
@@ -707,7 +708,8 @@ public class MovieRepositry
     }
     public MutableLiveData<ArrayList<ReviewsModel>> getAllReviews(String id)
     {
-        final String TrailersAPIKEY="https://api.themoviedb.org/3/"+type+"/"+id+"/reviews?api_key=1f59ebe04c42625fc6c290dccb75e0d5&language=en-US";
+        Log.d("revicess",""+id);
+        final String TrailersAPIKEY="https://api.themoviedb.org/3/"+type+"/"+id+"/reviews?api_key="+YOURAPIKEY+"&language=en-US";
         final MutableLiveData<ArrayList<ReviewsModel>> data = new MutableLiveData<>();
         final ArrayList<ReviewsModel> arrayList=new ArrayList<>();
         JsonObjectRequest objectRequest=new JsonObjectRequest(Request.Method.GET, TrailersAPIKEY, null, new Response.Listener<JSONObject>()
@@ -884,7 +886,4 @@ public class MovieRepositry
         return isFav;
     }
 
-
-
-
-}
+    }

@@ -1,5 +1,6 @@
 package com.example.moviesdbapp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.example.moviesdbapp.Fragments.exoPlayerFragment;
 import com.example.moviesdbapp.Model.Movie;
 import com.example.moviesdbapp.Model.Trailers;
 import com.example.moviesdbapp.R;
+import com.example.moviesdbapp.RecyclerViewClickListner;
 import com.example.moviesdbapp.id_interface;
 import com.squareup.picasso.Picasso;
 
@@ -24,12 +26,13 @@ public class trailersAdapter extends RecyclerView.Adapter<trailersAdapter.traile
 {
     public static ArrayList<Trailers> movieArrayList;
     private Context context;
-    id_interface id;
+    RecyclerViewClickListner clickListner;
     public static final String ImageBaseUrl="https://image.tmdb.org/t/p/w500";
-    public trailersAdapter( ArrayList<Trailers> movieArrayList,Context context)
+    public trailersAdapter( ArrayList<Trailers> movieArrayList,Context context,RecyclerViewClickListner clickListner)
     {
-        this.movieArrayList=movieArrayList;
+        trailersAdapter.movieArrayList =movieArrayList;
         this.context=context;
+        this.clickListner=clickListner;
     }
 
 
@@ -44,12 +47,22 @@ public class trailersAdapter extends RecyclerView.Adapter<trailersAdapter.traile
         return holder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull trailersAdapter.trailerViewholder holder, int position)
     {
 
         Picasso.get().load(ImageBaseUrl+exoPlayerFragment.getImage()).into(holder.imageView);
-        holder.moviename.setText("Trailer "+position);
+        int pos=position+1;
+        holder.moviename.setText("Trailer "+pos);
+        holder.imageView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                clickListner.onItemClick(position);
+            }
+        });
         //id.item_id(movieArrayList);
 
 

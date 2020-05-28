@@ -6,5 +6,5 @@ import java.util.ArrayList;
 
 public interface id_interface
 {
-    public void item_id(String id,String type,String image);
+    void item_id(String id, String type, String image);
 }

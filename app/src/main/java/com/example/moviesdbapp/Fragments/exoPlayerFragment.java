@@ -16,9 +16,13 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.moviesdbapp.Adapter.ReviewAdapter;
 import com.example.moviesdbapp.Adapter.trailersAdapter;
+import com.example.moviesdbapp.Model.ReviewsModel;
 import com.example.moviesdbapp.Model.Trailers;
 import com.example.moviesdbapp.R;
+import com.example.moviesdbapp.RecyclerViewClickListner;
 import com.example.moviesdbapp.ViewModel.ViewModel;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -28,7 +32,8 @@ import java.util.ArrayList;
 public class exoPlayerFragment extends Fragment
 {
     TextView movieName;
-    RecyclerView trailerrecyler;
+    RecyclerView trailerrecyler,reviewRecyclerView;
+    RecyclerView.Adapter reviewadapter;
     RecyclerView.Adapter adapter;
     ArrayList<Trailers> arrayList;
     ViewModel viewModel;
@@ -36,10 +41,10 @@ public class exoPlayerFragment extends Fragment
     private static String VIDEO_ID = "EGy39OMyHzw";
     String id;
     public static String image;
+    RecyclerViewClickListner recyclerViewClickListner;
 
 
     public String movieNAme;
-
     public String type;
     ArrayList<Trailers> TrailersArrayList;
     ArrayList<Trailers> ReviewsArrayList;
@@ -53,8 +58,9 @@ public class exoPlayerFragment extends Fragment
     {
         View view=inflater.inflate(R.layout.exoplayer_layout,container,false);
         trailerrecyler=view.findViewById(R.id.trailersRecycler);
-//        movieName=view.findViewById(R.id.moviename);
-//        movieName.setText(getMovieNAme());
+        reviewRecyclerView=view.findViewById(R.id.reviewRecyclerView);
+        movieName=view.findViewById(R.id.moviename);
+        movieName.setText(getMovieNAme());
         return view;
     }
 
@@ -64,6 +70,7 @@ public class exoPlayerFragment extends Fragment
     {
         super.onActivityCreated(savedInstanceState);
        fetchTrailersDataFromViewModel();
+       fetchReviewsFromViewModel();
     }
 
 
@@ -74,7 +81,7 @@ public class exoPlayerFragment extends Fragment
         viewModel.setType(getType());
         trailerrecyler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         trailerrecyler.setHasFixedSize(true);
-        viewModel.getTrailerData(getid()).observe(this, new Observer<ArrayList<Trailers>>()
+        viewModel.getTrailerData(getid()).observe(getViewLifecycleOwner(), new Observer<ArrayList<Trailers>>()
         {
             @Override
             public void onChanged(ArrayList<Trailers> trailers)
@@ -84,7 +91,14 @@ public class exoPlayerFragment extends Fragment
                     TrailersArrayList.clear();
                     Log.d("Arraylistsize", "" + TrailersArrayList.size());
                     getTrailerKey(trailers.get(0).getTrailerKey());
-                    adapter = new trailersAdapter(trailers, getContext());
+                    adapter = new trailersAdapter(trailers, getContext(), new RecyclerViewClickListner() {
+
+                        @Override
+                        public void onItemClick(int position)
+                        {
+                            getTrailerKey(trailers.get(position).getTrailerKey());
+                        }
+                    });
                     trailerrecyler.setAdapter(adapter);
                     TrailersArrayList.addAll(trailers);
                     adapter.notifyDataSetChanged();
@@ -97,22 +111,19 @@ public class exoPlayerFragment extends Fragment
         ReviewsArrayList=new ArrayList<>();
         viewModel= ViewModelProviders.of(this).get(ViewModel.class);
         viewModel.setType(getType());
-        trailerrecyler.setLayoutManager(new LinearLayoutManager(getContext()));
-        trailerrecyler.setHasFixedSize(true);
-        viewModel.getTrailerData(getid()).observe(this, new Observer<ArrayList<Trailers>>()
+        reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        reviewRecyclerView.setHasFixedSize(true);
+        viewModel.getReviewsData(getid()).observe(this, new Observer<ArrayList<ReviewsModel>>()
         {
             @Override
-            public void onChanged(ArrayList<Trailers> trailers)
+            public void onChanged(ArrayList<ReviewsModel> arrayList)
             {
-                ReviewsArrayList.clear();
-                Log.d("Arraylistsize",""+ReviewsArrayList.size());
-                getTrailerKey(trailers.get(0).getTrailerKey());
-                adapter=new trailersAdapter(trailers,getContext());
-                trailerrecyler.setAdapter(adapter);
-                TrailersArrayList.addAll(trailers);
-                adapter.notifyDataSetChanged();
+                reviewadapter=new ReviewAdapter(getContext(),arrayList);
+                reviewRecyclerView.setAdapter(reviewadapter);
+                reviewadapter.notifyDataSetChanged();
             }
         });
+
     }
     public void getTrailerKey(String key)
     {
@@ -140,8 +151,6 @@ public class exoPlayerFragment extends Fragment
                 }
             });
         }
-
-
     }
 
     public String getid() {
@@ -156,7 +165,7 @@ public class exoPlayerFragment extends Fragment
     }
 
     public void setImage(String image) {
-        this.image = image;
+        exoPlayerFragment.image = image;
     }
     public String getType() {
         return type;
@@ -174,9 +183,6 @@ public class exoPlayerFragment extends Fragment
     {
         this.movieNAme = movieNAme;
     }
-
-
-
 
 
 

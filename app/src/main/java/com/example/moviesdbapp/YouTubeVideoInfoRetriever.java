@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -144,7 +145,7 @@ public class YouTubeVideoInfoRetriever
                 {
                     break;
                 }
-                String s = new String(b, 0, bytesRead, ENCODING_UTF_8);
+                String s = new String(b, 0, bytesRead, StandardCharsets.UTF_8);
                 sb.append(s);
             }
 

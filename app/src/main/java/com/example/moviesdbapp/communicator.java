@@ -7,5 +7,5 @@ import java.util.ArrayList;
 
 public interface communicator
 {
-    public void dataArrayList(ArrayList<Movie> movies,String tag,String type);
+    void dataArrayList(ArrayList<Movie> movies, String tag, String type);
 }

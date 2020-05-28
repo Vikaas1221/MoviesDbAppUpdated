@@ -126,7 +126,6 @@ public class TvShowsFragment extends Fragment
             }
         });
         clickListnerFroSeeAll(seeMorePopular,PopularTvShows,POPULAR);
-        ;
     }
     public void fetchDataTopFromViewModel(RecyclerView topRatedRecyclerView)
     {
