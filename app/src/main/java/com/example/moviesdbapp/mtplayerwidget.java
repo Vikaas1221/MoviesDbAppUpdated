@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import androidx.annotation.NonNull;
+
 import com.example.moviesdbapp.Activity.MainActivity;
 import com.example.moviesdbapp.Activity.splash_screen;
 import com.example.moviesdbapp.Model.Movie;
@@ -30,10 +32,13 @@ public class mtplayerwidget extends AppWidgetProvider
         CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(),R.layout.mtplayerwidget);
-        views.setTextViewText(R.id.MovieTitleWidget,title);
+    //    views.setTextViewText(R.id.MovieTitleWidget,title);
 
-        Intent intent = new Intent(context, RecipeWidgetService.class);
-        views.setRemoteAdapter(R.id.MovieListViewWidget, intent);
+       // Intent intent = new Intent(context, RecipeWidgetService.class);
+        setRemoteAdapter(context, views);
+        Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        views.setPendingIntentTemplate(R.id.MovieTitleWidget,pendingIntent);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -55,23 +60,9 @@ public class mtplayerwidget extends AppWidgetProvider
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
     }
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
-        if (intent.hasExtra("moviename")) {
-          //  Movie movie = intent.getParcelableExtra("movie");
-            title=intent.getExtras().getString("moviename");
-        } else {
-            title = "No Recipe Selected";
-        }
+    private static void setRemoteAdapter(Context context, @NonNull final RemoteViews views) {
+        views.setRemoteAdapter(R.id.MovieListViewWidget, new Intent(context, RecipeWidgetService.class));
 
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context.getApplicationContext());
-        ComponentName myWidget = new ComponentName(context.getApplicationContext(), mtplayerwidget.class);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(myWidget);
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.MovieListViewWidget);
-        if (appWidgetIds != null && appWidgetIds.length > 0) {
-            onUpdate(context, appWidgetManager, appWidgetIds);
-        }
     }
 }
 

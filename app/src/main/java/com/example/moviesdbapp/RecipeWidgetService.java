@@ -2,78 +2,34 @@ package com.example.moviesdbapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.example.moviesdbapp.Adapter.seeMoreScreenAdapter;
 import com.example.moviesdbapp.Model.Movie;
+import com.example.moviesdbapp.ViewModel.ViewModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 class RecipeWidgetService extends RemoteViewsService
 {
-    private ArrayList<Movie> MovieArrayList;
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent)
     {
-        return new RemoteListViewFactory(getApplicationContext());
+        return new RemoteListViewFactory(this,intent);
     }
-    class RemoteListViewFactory implements RecipeWidgetService.RemoteViewsFactory {
 
-        final Context context;
-
-        public RemoteListViewFactory(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public void onCreate() {
-
-        }
-
-        @Override
-        public void onDataSetChanged()
-        {
-            MovieArrayList = mtplayerwidget.upcomingMovies;
-        }
-
-        @Override
-        public void onDestroy() {
-
-        }
-
-        @Override
-        public int getCount() {
-            if (MovieArrayList == null)
-                return 0;
-            return MovieArrayList.size();
-        }
-
-        @Override
-        public RemoteViews getViewAt(int index) {
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.movie_widget_layout);
-            remoteViews.setTextViewText(R.id.movieItemTextView, MovieArrayList.get(index).getOriginalTitle()
-            );
-            return remoteViews;
-        }
-
-        @Override
-        public RemoteViews getLoadingView() {
-            return null;
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return 1;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return false;
-        }
-    }
 }

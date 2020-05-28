@@ -83,7 +83,7 @@ public class seeMoreActivity extends AppCompatActivity implements RecyclerViewCl
         toolbar.setTitle(tag);
         SeeMoreRecycerView=findViewById(R.id.allMoviesRecyclerView);
         SeeMoreRecycerView.setLayoutManager(new GridLayoutManager(this,3));
-        SeeMoreRecycerView.setHasFixedSize(true);
+        SeeMoreRecycerView.setHasFixedSize(false);
         adapter=new seeMoreScreenAdapter(movieArrayList,this,this);
         SeeMoreRecycerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
