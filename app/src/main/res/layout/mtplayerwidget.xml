@@ -2,6 +2,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#09C"
+    android:minWidth="@dimen/_200sdp"
+    android:minHeight="@dimen/_200sdp"
+    android:updatePeriodMillis="30"
     android:orientation="vertical"
     android:padding="@dimen/widget_margin">
 
@@ -11,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="#09C"
-        android:text="@string/name"
+        android:text="@string/upcoming_movies"
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="24sp"

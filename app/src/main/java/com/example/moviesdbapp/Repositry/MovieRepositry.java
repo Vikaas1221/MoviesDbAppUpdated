@@ -1,7 +1,5 @@
 package com.example.moviesdbapp.Repositry;
 
-import android.annotation.SuppressLint;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,7 +33,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import static com.example.moviesdbapp.Activity.MainActivity.context;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +46,7 @@ public class MovieRepositry
     String API_KEY="";
     String type="";
     String id="";
+    String movieId;
     private static final String SUCESS="sucess";
     private static final String ERROR="failed";
     public static  int i=0;
@@ -56,7 +54,8 @@ public class MovieRepositry
     private static  final String TVTYPE="tv";
     private static MovieRepositry instance;
     private String user;
-    private static  String YOURAPIKEY="1f59ebe04c42625fc6c290dccb75e0d5";
+    private static  String YOURAPIKEY="";
+    MutableLiveData<Boolean> isFav ;
 
 
 
@@ -868,6 +867,7 @@ public class MovieRepositry
     public MutableLiveData<Boolean> searchMovieInDatabase(String movieId)
     {
         MutableLiveData<Boolean> isFav=new MutableLiveData<>();
+
         reference.whereEqualTo("MovieId",movieId)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -883,7 +883,36 @@ public class MovieRepositry
                         }
                     }
                 });
+       // new FetchAsync(movieId).execute();
         return isFav;
     }
-
+//        @SuppressLint("StaticFieldLeak")
+//        class  FetchAsync extends AsyncTask<Void,Void,Boolean>
+//        {
+//            String movieId;
+//            public FetchAsync(String movieId)
+//            {
+//                this.movieId=movieId;
+//            }
+//
+//            @Override
+//            protected Boolean doInBackground(Void... voids)
+//            {
+//                try {
+//                    NetworkUtils obj = new NetworkUtils();
+//                    return obj.searchForMovie(movieId);
+//                }catch (Exception e)
+//                {
+//                    e.printStackTrace();;
+//                }
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Boolean aBoolean)
+//            {
+//                super.onPostExecute(aBoolean);
+//                isFav.setValue(aBoolean);
+//            }
+//        }
     }

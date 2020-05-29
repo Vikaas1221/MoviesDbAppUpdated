@@ -37,7 +37,7 @@ public class exoPlayerFragment extends Fragment
     RecyclerView.Adapter adapter;
     ArrayList<Trailers> arrayList;
     ViewModel viewModel;
-    private static final String API_KEY="AIzaSyAR-6Ej7276UArDyVQ9w-rafFfGPxr3Bqo";
+    private static final String API_KEY="";
     private static String VIDEO_ID = "EGy39OMyHzw";
     String id;
     public static String image;
@@ -136,6 +136,7 @@ public class exoPlayerFragment extends Fragment
                 @Override
                 public void onInitializationSuccess(Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                     if (!b) {
+
                         youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
                         youTubePlayer.loadVideo(key);
                         youTubePlayer.play();

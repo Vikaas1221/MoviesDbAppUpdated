@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,8 @@ public class seeMoreActivity extends AppCompatActivity implements RecyclerViewCl
     ViewModel viewModel;
     Boolean isFav=false;
     BottomSheetDialog bottomSheetDialog;
+    Boolean isLandScape=false;
+
 
 
 
@@ -64,9 +67,11 @@ public class seeMoreActivity extends AppCompatActivity implements RecyclerViewCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_more);
         toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         mauth=FirebaseAuth.getInstance();
         currentuser=mauth.getCurrentUser();
         user=currentuser.getUid();
+        isLandScape= getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
         Bundle bundle=getIntent().getExtras();
 
@@ -82,7 +87,15 @@ public class seeMoreActivity extends AppCompatActivity implements RecyclerViewCl
         }
         toolbar.setTitle(tag);
         SeeMoreRecycerView=findViewById(R.id.allMoviesRecyclerView);
-        SeeMoreRecycerView.setLayoutManager(new GridLayoutManager(this,3));
+        if (isLandScape)
+        {
+            SeeMoreRecycerView.setLayoutManager(new GridLayoutManager(this,5));
+        }
+        else
+        {
+            SeeMoreRecycerView.setLayoutManager(new GridLayoutManager(this,3));
+        }
+
         SeeMoreRecycerView.setHasFixedSize(false);
         adapter=new seeMoreScreenAdapter(movieArrayList,this,this);
         SeeMoreRecycerView.setAdapter(adapter);

@@ -28,6 +28,10 @@ public class Movie implements Serializable
     {
 
     }
+    public Movie(String originalTitle)
+    {
+        this.originalTitle=originalTitle;
+    }
     public String getOriginalTitle() {
         return originalTitle;
     }

@@ -24,7 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-class RecipeWidgetService extends RemoteViewsService
+public class RecipeWidgetService extends RemoteViewsService
 {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent)

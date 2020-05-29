@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <receiver android:name=".mtplayerwidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -22,6 +21,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/mtplayerwidget_info" />
         </receiver>
+
+
 
         <activity android:name=".Activity.newUserActivity" />
         <activity android:name=".Activity.LoginActivity" />
@@ -47,6 +48,8 @@
         <service
             android:name="RecipeWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+
     </application>
 
 </manifest>

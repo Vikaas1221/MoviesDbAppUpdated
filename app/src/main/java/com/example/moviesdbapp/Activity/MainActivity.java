@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements mainactivityInter
         username=findViewById(R.id.user_name);
         username.setText(userapi.getInstance().getUsername());
         toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         toolbar.setTitle("Movies");
         drawerLayout=findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
