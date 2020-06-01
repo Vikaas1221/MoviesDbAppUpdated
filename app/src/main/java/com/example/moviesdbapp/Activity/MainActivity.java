@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.moviesdbapp.Adapter.NavigationAdapter;
+import com.example.moviesdbapp.Fragments.FavouritesFragement;
 import com.example.moviesdbapp.Fragments.MoviesFragment;
 import com.example.moviesdbapp.Model.Movie;
 import com.example.moviesdbapp.Model.NavModel;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements mainactivityInter
         username=findViewById(R.id.user_name);
         username.setText(userapi.getInstance().getUsername());
         toolbar=findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       // setSupportActionBar(toolbar);
         toolbar.setTitle("Movies");
         drawerLayout=findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
@@ -204,6 +205,8 @@ public class MainActivity extends AppCompatActivity implements mainactivityInter
                 removeFromFavourites(movie.getId());
                 movies.remove(movie);
                 bottomSheetDialog.dismiss();
+                Fragment fragment=new FavouritesFragement();
+                getSupportFragmentManager().beginTransaction().replace(R.id.HomeScreenContainer,fragment).commit();
             }
         });
 

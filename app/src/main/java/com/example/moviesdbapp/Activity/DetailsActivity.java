@@ -11,7 +11,7 @@ import com.example.moviesdbapp.id_interface;
 
 public class DetailsActivity extends AppCompatActivity
 {
-    public static String type="";
+    public static String type="AIzaSyAR-6Ej7276UArDyVQ9w-rafFfGPxr3Bqo";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

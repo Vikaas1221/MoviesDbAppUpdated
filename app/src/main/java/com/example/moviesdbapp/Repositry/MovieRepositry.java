@@ -16,6 +16,7 @@ import com.example.moviesdbapp.Model.Movie;
 import com.example.moviesdbapp.Model.ReviewsModel;
 import com.example.moviesdbapp.Model.Trailers;
 
+import com.example.moviesdbapp.favourtiesUpdatedListInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -883,36 +884,6 @@ public class MovieRepositry
                         }
                     }
                 });
-       // new FetchAsync(movieId).execute();
         return isFav;
     }
-//        @SuppressLint("StaticFieldLeak")
-//        class  FetchAsync extends AsyncTask<Void,Void,Boolean>
-//        {
-//            String movieId;
-//            public FetchAsync(String movieId)
-//            {
-//                this.movieId=movieId;
-//            }
-//
-//            @Override
-//            protected Boolean doInBackground(Void... voids)
-//            {
-//                try {
-//                    NetworkUtils obj = new NetworkUtils();
-//                    return obj.searchForMovie(movieId);
-//                }catch (Exception e)
-//                {
-//                    e.printStackTrace();;
-//                }
-//                return null;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(Boolean aBoolean)
-//            {
-//                super.onPostExecute(aBoolean);
-//                isFav.setValue(aBoolean);
-//            }
-//        }
     }

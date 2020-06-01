@@ -1,6 +1,7 @@
 package com.example.moviesdbapp.ViewModel;
 
 import android.util.Log;
+import android.widget.LinearLayout;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -25,9 +26,10 @@ public class ViewModel extends androidx.lifecycle.ViewModel
     LiveData<ArrayList<Movie>> topRatedlistLiveData;
     LiveData<ArrayList<Movie>> upcominglistLiveData;
     LiveData<ArrayList<Movie>> nowPlayinglistLiveData;
+    LiveData<ArrayList<Movie>> allFavouritesLiveData;
     LiveData<ArrayList<Movie>> allAiringlistLiveData;
     LiveData<ArrayList<Movie>> allOnTvlistLiveData;
-    LiveData<ArrayList<Movie>> allFavouritesLiveData;
+
     LiveData<ArrayList<Trailers>> TrailermutableLiveData;
     LiveData<ArrayList<ReviewsModel>> ReviewsmutableLiveData;
     MutableLiveData<ArrayList<Movie>> ReviewsmutableLiveData1;
@@ -145,6 +147,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel
     }
     public LiveData<ArrayList<Movie>> getAllFavourite()
     {
+
+        //MutableLiveData<ArrayList<Movie>> listMutableLiveData;
         if (allFavouritesLiveData==null)
         {
             allFavouritesLiveData=movieRepo.getAllFavouritesMovies();

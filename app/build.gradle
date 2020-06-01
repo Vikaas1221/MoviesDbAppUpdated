@@ -4,10 +4,10 @@ apply plugin: 'com.google.gms.google-services'
 android {
     signingConfigs {
         config {
-            storeFile file("$rootDir/keystore/keystore.jks")
-            storePassword 'Vikas@#$123'
-            keyAlias = 'key0'
-            keyPassword 'Vikash@#$123'
+            storeFile file("$rootDir/keystore.jks")
+            storePassword 'password'
+            keyAlias = 'vikas'
+            keyPassword 'password'
         }
     }
     compileSdkVersion 28
@@ -26,7 +26,8 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-            //signingConfig signingConfigs.release
+            // signingConfig signingConfigs.config
+
         }
     }
     compileOptions {

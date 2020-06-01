@@ -52,45 +52,9 @@ class RemoteListViewFactory implements RecipeWidgetService.RemoteViewsFactory
 
 
 
-  /*  private void initilize() throws NullPointerException
-    {
-        try {
-
-            arrayList.clear();
-            mauth = FirebaseAuth.getInstance();
-            FirebaseUser user = mauth.getCurrentUser();
-            String currentuser = user.getUid();
-
-            reference.whereEqualTo("userid", currentuser)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                            if (!queryDocumentSnapshots.isEmpty()) {
-                                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                                    String movieName = documentSnapshot.getString("MovieName");
-                                    String movieOverview = documentSnapshot.getString("MovieOverview");
-                                    String movieRating = documentSnapshot.getString("MovieRating");
-                                    String movieRelease = documentSnapshot.getString("MovieDate");
-                                    String movieId = documentSnapshot.getString("MovieId");
-                                    String movieImage = documentSnapshot.getString("MovieImage");
-                                    String type = documentSnapshot.getString("Type");
-                                    Movie movie = new Movie(movieName, movieImage, movieRating, movieRelease, movieOverview, movieId);
-                                    movie.setType(type);
-                                    arrayList.add(movie);
-                                }
-                            }
-                        }
-                    });
-        }catch (NullPointerException e)
-        {
-            e.printStackTrace();
-        }
-   */ //}
     private void laivz() throws NullPointerException
     {
         String API_KEY="https://api.themoviedb.org/3/movie/upcoming?api_key="+YOURAPIKEY+"&language=en-US&page=1";
-        Log.d("qwertappwidget","In repo");
-       // final ArrayList<Movie> arrayList=new ArrayList<>();
         JsonObjectRequest objectRequest=new JsonObjectRequest(Request.Method.GET, API_KEY, null, new Response.Listener<JSONObject>()
         {
             @Override

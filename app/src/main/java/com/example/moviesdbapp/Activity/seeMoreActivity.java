@@ -144,9 +144,7 @@ public class seeMoreActivity extends AppCompatActivity implements RecyclerViewCl
         trailer=bottomShetView.findViewById(R.id.trailer);
         RatingBar ratingBar=bottomShetView.findViewById(R.id.ratingbar);
         movie=movieArrayList.get(position);
-
         checkForFavourtie(movie);
-
         float rating=Float.parseFloat(movie.getUserRating());
         rating=rating/2;
         ratingBar.setRating(rating);
