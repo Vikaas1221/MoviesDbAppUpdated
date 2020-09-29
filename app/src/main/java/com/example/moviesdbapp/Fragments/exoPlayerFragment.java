@@ -37,7 +37,7 @@ public class exoPlayerFragment extends Fragment
     RecyclerView.Adapter adapter;
     ArrayList<Trailers> arrayList;
     ViewModel viewModel;
-    private static final String API_KEY="";
+    private static final String API_KEY="AIzaSyAR-6Ej7276UArDyVQ9w-rafFfGPxr3Bqo";
     private static String VIDEO_ID;
     String id;
     public static String image;
