@@ -55,7 +55,7 @@ public class MovieRepositry
     private static  final String TVTYPE="tv";
     private static MovieRepositry instance;
     private String user;
-    private static  String YOURAPIKEY="";
+    private static  String YOURAPIKEY="1f59ebe04c42625fc6c290dccb75e0d5";
     MutableLiveData<Boolean> isFav ;
 
 
